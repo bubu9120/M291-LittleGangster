@@ -54,7 +54,11 @@ body {
 }
 /*Header*/
 .header {
-  background: var(--deep-blue);
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  z-index: 9;
+  background: var(--black);
 }
 
 .header > .container {
@@ -80,7 +84,7 @@ body {
   font-size: 20px;
 
   border-radius: 50%;
-  background: var(--light-black);
+  background: var(--white);
   color: var(--light-black);
 }
 
@@ -142,17 +146,19 @@ a:active {
 }
 /*Main*/
 
+.hero-section {
+  background: var(--overlay-black);
+  color: var(--white);
+  position: relative;
+}
 #header-video-banner {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
+  height: 100%;
   z-index: -1;
-}
-
-.hero-section {
-  background: var(--overlay-black);
-  color: var(--white);
+  object-fit: cover;
 }
 
 .hero__title {
@@ -171,7 +177,11 @@ a:active {
 }
 
 .hero__aside {
-  background: var(--light-black);
+  background: var(--overlay-black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .hero__aside__section > .subtitle {
@@ -180,12 +190,7 @@ a:active {
 }
 
 .hero__aside__text {
-  margin: 1.5rem 0;
-
-  font-size: clamp(1.4rem, 3vw, 1.8rem);
-  text-align: center;
-
-  color: var(--white);
+  height: 10rem;
 }
 
 .primary-section .subtitle {
