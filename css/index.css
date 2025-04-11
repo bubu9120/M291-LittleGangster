@@ -13,6 +13,7 @@
   --deep-blue: #2e323f;
   --black: rgb(0 0 0);
   --light-black: rgb(1 1 1 / 0.7);
+  --overlay-black: rgb(0 0 0 / 0.2);
 }
 
 body {
@@ -140,8 +141,17 @@ a:active {
   text-align: center;
 }
 /*Main*/
+
+#header-video-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: -1;
+}
+
 .hero-section {
-  background: var(--black);
+  background: var(--overlay-black);
   color: var(--white);
 }
 
