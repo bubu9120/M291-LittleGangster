@@ -1,9 +1,4 @@
 canvas {
-  width: 800px;
+  width: 100vw;
   height: 600px;
-  background: #000;
-  display: block;
-  border: 3px solid #ccc;
-  margin: auto;
-  position: relative;
 }

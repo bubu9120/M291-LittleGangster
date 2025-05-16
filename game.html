@@ -23,8 +23,7 @@
     "
         />
       </head>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script src="./js/game.js"></script>
+
       <body>
         <header class="header">
           <div class="container">
@@ -44,7 +43,9 @@
               <nav class="primary-nav">
                 <ul class="nav__list">
                   <li class="nav__list__item">
-                    <a href="./index.html" class="primary-nav__link">Startseite</a>
+                    <a href="./index.html" class="primary-nav__link"
+                      >Startseite</a
+                    >
                   </li>
 
                   <li class="nav__list__item">
@@ -52,55 +53,35 @@
                   </li>
 
                   <li class="nav__list__item">
-                    <a href="./game.html" class="primary-nav__link">Gewinnspiel</a>
-                  </li>
-                </ul>
-              </nav>
-
-              <nav class="secondary-nav">
-                <ul class="nav__list">
-                  <li class="nav__list__item">
-                    <a href="" class="secondary-nav__link">sign in</a>
-                  </li>
-
-                  <li class="nav__list__item">
-                    <a href="" class="secondary-nav__link link-button"
-                      >sign up</a
+                    <a href="./game.html" class="primary-nav__link"
+                      >Gewinnspiel</a
                     >
                   </li>
                 </ul>
               </nav>
             </div>
-            <!--End of the nav-container-->
           </div>
           <!--End of the first container inside header-->
         </header>
 
         <main class="main-content">
-            <section class="hero-section">
-                
-                <div class="container row2">
-                  <h1 class="hero__title">
-                    Little-Ganster
-                    <span class="accent">Scherzartikel für echte Schlingel!</span>
-                  </h1>
-        
-                  <div class="wrap wrap--bottom">
-                    <p class="hero__text">
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Lorem
-                      ipsum dolor sit, amet consectetur adipisicing elit.
-                    </p>
-        
-    
-                  </div>
-                </div>
-                
-              </section>
+          <section class="hero-section">
+            <div class="container row2">
+              <h1 class="hero__title">
+                Little-Ganster
+                <span class="accent">Scherzartikel für echte Schlingel!</span>
+              </h1>
+
+              <div class="wrap wrap--bottom">
+                <p class="hero__text">Gewinnspiel</p>
+              </div>
+            </div>
+          </section>
           <section class="primary-section">
             <div class="container row2">
-              <div id="game-container">
-                <canvas id="game-canvas" width="800" height="600"></canvas>
-              </div>
+              <!-- game einbindung  -->
+              <canvas></canvas>        
+            
           </section>
         </main>
 
