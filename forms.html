@@ -8,6 +8,10 @@
       rel="stylesheet"
       href="./css/index.css "
     />
+    <link
+      rel="stylesheet forms"
+      href="./css/formular.css "
+    />
 </head>
 
 
@@ -67,58 +71,52 @@
           <div class="wrap">
             <h2 class="subtitle">Scherzartikel von Schlingel für Schlingel</h2>
     
-            <p class="primary-section__text">
-                Little Gangster – Dein Scherzartikel-Shop mit Gauner-Charme
-                Bei Little Gangster dreht sich alles um Schabernack mit Stil. Wir haben uns ganz bewusst auf das Gauner-Segment im Scherzartikel-Bereich spezialisiert – keine Massenware, kein Einheitsbrei. Stattdessen findest du bei uns ausgewählte Accessoires und Requisiten, mit denen du deine inneren Ganoven zum Leben erweckst – ob fürs Kostümfest, den Junggesellenabschied oder einfach für den nächsten frechen Streich.
-                <br>
-                Unsere Mission: Qualität statt Quantität. Wir bieten dir eine liebevoll kuratierte Auswahl an Scherzartikeln, die durch Originalität und Humor überzeugen – und dabei fernab vom Mainstream liegen.
-                <br>
-                Wir wollen dich zum Schmunzeln bringen – und dir genau das bieten, was du suchst: den kleinen, frechen Unterschied.
-                <br>
-                Willkommen bei Little Gangster – dem Shop für alle, die Humor mit einem Augenzwinkern tragen.
-            </p>
-    
-            <img
-              src="../M291-LittleGangster/assets/images/ChatGPT Image 9. Mai 2025, 13_17_58.png"
-              alt="Shop Little Gangster Innenansicht"
-              class="primary-section__img"
-              width="500px"
-              height="500px"
-            />
-           
-            <div>
-                <h2 class="subtitle">Unser Standort</h2>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2027.1588390679663!2d8.093756147061933!3d47.17368754612978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4790201d2401845b%3A0xf0308c86679bb1a5!2sBBZW%20-%20Berufsbildungszentrum%20Wirtschaft%2C%20Informatik%20und%20Technik!5e0!3m2!1sde!2sch!4v1746790499278!5m2!1sde!2sch" width="500" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-              </div>
-          </div>
+           <div>
 
-    
-          <aside class="primary__aside row">
-            <article class="primary__aside__article">
-              <h2 class="subtitle">Qualität</h2>
-    
-              <p class="aside__article__text">
-                Wir setzen auf ausgesuchte Produkte mit gutem Material und cleverer Verarbeitung – keine Ramschware, sondern Scherzartikel, die ihren Zweck mit Stil erfüllen. Qualität, auf die du dich verlassen kannst.
-              </p>
-            </article>
-    
-            <article class="primary__aside__article">
-              <h2 class="subtitle">Einzigartigkeit</h2>
-    
-              <p class="aside__article__text">
-                Unsere Artikel findest du nicht an jeder Ecke. Wir konzentrieren uns auf das Gauner-Thema – mit originellen Accessoires und Requisiten, die du so nur bei uns bekommst.
-              </p>
-            </article>
-    
-            <article class="primary__aside__article">
-              <h2 class="subtitle">Spassfaktor</h2>
-    
-              <p class="aside__article__text">
-                Ob Motto-Party, Fasnacht oder Junggesellenabschied: Mit unseren Produkten wird dein Anlass garantiert zum Highlight. Lacher und gute Stimmung inklusive!
-              </p>
-            </article>
-          </aside>
-        </div>
+            <div class="formular-container">
+              <h2>Kontaktformular – Little Gangster</h2>
+              <form id="kontaktformular">
+                <div class="eingabefeld">
+                  <label for="email">E-Mail-Adresse*</label>
+                  <input type="email" id="email" name="email" required />
+                  <div class="fehlertext" id="fehler-email">Bitte eine gültige E-Mail eingeben.</div>
+                </div>
+          
+                <div class="eingabefeld">
+                  <label for="name">Name*</label>
+                  <input type="text" id="name" name="name" required />
+                  <div class="fehlertext" id="fehler-name">Name ist erforderlich.</div>
+                </div>
+          
+                <div class="eingabefeld">
+                  <label for="postleitzahl">Postleitzahl*</label>
+                  <input type="number" id="postleitzahl" name="postleitzahl" required />
+                  <div class="fehlertext" id="fehler-plz">Bitte eine gültige Postleitzahl eingeben.</div>
+                </div>
+          
+                <div class="eingabefeld">
+                  <label for="kategorie">Kategorie</label>
+                  <select id="kategorie" name="kategorie">
+                    <option value="">Bitte wählen</option>
+                    <option value="masken">Masken</option>
+                    <option value="konfetti">Konfetti</option>
+                    <option value="gagartikel">Gag-Artikel</option>
+                  </select>
+                </div>
+          
+                <div class="eingabefeld">
+                  <label for="nachricht">Nachricht</label>
+                  <textarea id="nachricht" name="nachricht" rows="4"></textarea>
+                </div>
+          
+                <div class="spinner" id="spinner"></div>
+          
+                <button type="submit">Absenden</button>
+              </form>
+            </div>
+          
+          
+
       </section>
     </main>
 </body>
@@ -196,3 +194,6 @@
     </footer>
 
 </html>
+
+<script src="../M291-LittleGangster/js/databaseClient.js"></script>
+<script src="../M291-LittleGangster/js/index.js"></script>
