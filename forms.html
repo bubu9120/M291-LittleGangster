@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formular little Gangster</title>
+    <link
+      rel="stylesheet"
+      href="./css/index.css "
+    />
+    <link
+      rel="stylesheet forms"
+      href="./css/formular.css "
+    />
+</head>
+
+
+<header class="header">
+    <div class="container">
+      <button class="toggle">
+        <i class="hamburguer fas fa-bars"></i>
+      </button>
+  
+      <img
+        src="https://drive.google.com/uc?id=1h7lXWV56qq_ZObtqsrQkBXcDwo1gfmDO"
+        alt="Conquering responsive layouts logo"
+        class="logo"
+        width="55px"
+        height="30px"
+      />
+  
+      <div class="nav-container">
+        <nav class="primary-nav">
+          <ul class="nav__list">
+            <li class="nav__list__item">
+              <a href="index.html" class="primary-nav__link">home</a>
+            </li>
+  
+            <li class="nav__list__item">
+              <a href="about.html" class="primary-nav__link">about</a>
+            </li>
+  
+            <li class="nav__list__item">
+              <a href="#" class="primary-nav__link">contact</a>
+            </li>
+          </ul>
+        </nav>
+  
+        <nav class="secondary-nav">
+          <ul class="nav__list">
+            <li class="nav__list__item">
+              <a href="" class="secondary-nav__link">sign in</a>
+            </li>
+  
+            <li class="nav__list__item">
+              <a href="" class="secondary-nav__link link-button">sign up</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!--End of the nav-container-->
+    </div>
+    <!--End of the first container inside header-->
+  </header>
+
+
+<body>
+    
+    <section class="primary-section">
+        <div class="container row2">
+          <div class="wrap">
+            <h2 class="subtitle">Scherzartikel von Schlingel für Schlingel</h2>
+    
+           <div>
+
+            <div class="formular-container">
+              <h2>Kontaktformular – Little Gangster</h2>
+              <form id="kontaktformular">
+                <div class="eingabefeld">
+                  <label for="email">E-Mail-Adresse*</label>
+                  <input type="email" id="email" name="email" required />
+                  <div class="fehlertext" id="fehler-email">Bitte eine gültige E-Mail eingeben.</div>
+                </div>
+          
+                <div class="eingabefeld">
+                  <label for="name">Name*</label>
+                  <input type="text" id="name" name="name" required />
+                  <div class="fehlertext" id="fehler-name">Name ist erforderlich.</div>
+                </div>
+          
+                <div class="eingabefeld">
+                  <label for="postleitzahl">Postleitzahl*</label>
+                  <input type="number" id="postleitzahl" name="postleitzahl" required />
+                  <div class="fehlertext" id="fehler-plz">Bitte eine gültige Postleitzahl eingeben.</div>
+                </div>
+          
+                <div class="eingabefeld">
+                  <label for="kategorie">Kategorie</label>
+                  <select id="kategorie" name="kategorie">
+                    <option value="">Bitte wählen</option>
+                    <option value="masken">Masken</option>
+                    <option value="konfetti">Konfetti</option>
+                    <option value="gagartikel">Gag-Artikel</option>
+                  </select>
+                </div>
+          
+                <div class="eingabefeld">
+                  <label for="nachricht">Nachricht</label>
+                  <textarea id="nachricht" name="nachricht" rows="4"></textarea>
+                </div>
+          
+                <div class="spinner" id="spinner"></div>
+          
+                <button type="submit">Absenden</button>
+              </form>
+            </div>
+          
+          
+
+      </section>
+    </main>
+</body>
+    
+    <footer class="footer">
+      <p class="footer__text-big">just scratching the surface</p>
+      <!-- Forms external -->
+    
+      <div class="container row2">
+        <section class="footer__section">
+          <div class="container-forms">
+            <p class="headline">login</p>
+            <div>
+              <div class="box-forms">
+                <p>Email</p>
+                <div>
+                  <input type="text" name="" id="" placeholder="Enter your Email" />
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="box-forms">
+                <p>Password</p>
+                <div>
+                  <input
+                    type="password"
+                    name=""
+                    id=""
+                    placeholder="Enter your Password"
+                  />
+                </div>
+              </div>
+            </div>
+            <button class="loginBtn">Login</button>
+            <p class="text">Don't have an account?<a href="#">Sign in</a></p>
+          </div>
+        </section>
+    
+        <div class="row">
+          <nav class="footer__nav">
+            <h2 class="subtitle">getting around</h2>
+    
+            <div class="footer__nav__wrap">
+              <a href="#" class="footer__nav__link">home</a>
+              <a href="#" class="footer__nav__link">about</a>
+              <a href="#" class="footer__nav__link">contact</a>
+            </div>
+          </nav>
+    
+          <nav class="footer__nav">
+            <h2 class="subtitle">other things</h2>
+    
+            <div class="footer__nav__wrap">
+              <a href="#" class="footer__nav__link">lorem ipsum</a>
+              <a href="#" class="footer__nav__link">dolor</a>
+              <a href="#" class="footer__nav__link">sit amet</a>
+              <a href="#" class="footer__nav__link">consectetur</a>
+            </div>
+          </nav>
+    
+          <nav class="footer__nav">
+            <h2 class="subtitle">and more</h2>
+    
+            <div class="footer__nav__wrap">
+              <a href="#" class="footer__nav__link">lorem ipsum</a>
+              <a href="#" class="footer__nav__link">dolor</a>
+              <a href="#" class="footer__nav__link">sit amet</a>
+              <a href="#" class="footer__nav__link">consectetur</a>
+            </div>
+          </nav>
+        </div>
+        <!--End of the row div-->
+      </div>
+      <!--End of the container div-->
+    </footer>
+
+</html>
+
+<script src="../M291-LittleGangster/js/databaseClient.js"></script>
+<script src="../M291-LittleGangster/js/index.js"></script>
+<script>const config = {
+  group: "al6",
+  password: "nv8fkeq8s7vrx90z",
+};</script>
