@@ -80,7 +80,26 @@
           <section class="primary-section">
             <div class="container row2">
               <!-- game einbindung  -->
-              <canvas></canvas>        
+             
+                <div id="gameContainer" style="text-align: center;">
+                  <div class="game-screen" id="startScreen">
+                    <h2>Jump & Slide Game</h2>
+                    <button class="game-button" onclick="startGame()">Start</button>
+                  </div>
+
+                  <div class="game-screen" id="gameUI" style="display: none;">
+                    <canvas id="gameCanvas" width="800" height="300"></canvas>
+                    <p>Score: <span id="score">0</span></p>
+                  </div>
+
+                  <div class="game-screen" id="endScreen" style="display: none;">
+                    <h3>Game Over!</h3>
+                    <p>Your Score: <span id="finalScore">0</span></p>
+                    <button class="game-button" onclick="restartGame()">Play Again</button>
+                  </div>
+                </div>
+            
+              <!-- game einbindung fertig -->
             
           </section>
         </main>

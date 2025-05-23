@@ -1,4 +1,55 @@
-canvas {
-  width: 100vw;
-  height: 600px;
+/* canvas und container richtig zentrieren */
+#gameContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  margin: 0 auto;
+  padding: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Spiel-Bildschirme konsistent stylen */
+.game-screen {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Canvas zentrieren */
+#gameCanvas {
+  display: block;
+  margin: 0 auto;
+  border: 2px solid #333;
+  background-color: #eee;
+  max-width: 100%;
+}
+
+/* Buttons stilisieren */
+.game-button {
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: #222;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.game-button:hover {
+  background-color: #444;
+}
+
+/* Punktestand */
+#score {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Body-Scroll während des Spiels verhindern */
+body.no-scroll {
+  overflow: hidden;
 }
