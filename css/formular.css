@@ -1,67 +1,197 @@
+/* .formular-container {
+  max-width: 500px;
+  margin: auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
 
+.formular-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.eingabefeld {
+  margin-bottom: 15px;
+}
+
+.eingabefeld label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.eingabefeld input,
+.eingabefeld textarea,
+.eingabefeld select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.fehlertext {
+  color: red;
+  font-size: 0.9em;
+  display: none;
+}
+
+.spinner {
+  display: none;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.spinner::after {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 3px solid #999;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .formular-container {
+    padding: 15px;
+  }
+}
+ */
+
+/* Grundlayout */
+body {
+  background-color: #111111;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Formular-Container */
 .formular-container {
-    max-width: 500px;
-    margin: auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 40px auto;
+  background-color: #1a1a1a;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Formularüberschrift */
+.formular-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+/* Grid-Layout für zwei Spalten */
+#kontaktformular {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Eingabefelder */
+.eingabefeld {
+  display: flex;
+  flex-direction: column;
+}
+
+.eingabefeld label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.eingabefeld input,
+.eingabefeld textarea,
+.eingabefeld select {
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: #222;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.eingabefeld input:focus,
+.eingabefeld textarea:focus,
+.eingabefeld select:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+/* Nachricht auf volle Breite */
+textarea {
+  grid-column: span 2;
+}
+
+/* Fehlertext */
+.fehlertext {
+  color: #e74c3c;
+  font-size: 0.9em;
+  display: none;
+}
+
+/* Spinner */
+.spinner {
+  display: none;
+  grid-column: span 2;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.spinner::after {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 3px solid #999;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Submit-Button */
+button[type="submit"] {
+  grid-column: span 2;
+  padding: 12px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #2980b9;
+}
+
+/* Responsives Layout */
+@media (max-width: 768px) {
+  #kontaktformular {
+    grid-template-columns: 1fr;
   }
 
-  .formular-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .eingabefeld {
-    margin-bottom: 15px;
-  }
-
-  .eingabefeld label {
-    display: block;
-    margin-bottom: 5px;
-  }
-
-  .eingabefeld input,
-  .eingabefeld textarea,
-  .eingabefeld select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
-
-  .fehlertext {
-    color: red;
-    font-size: 0.9em;
-    display: none;
-  }
-
+  textarea,
+  button[type="submit"],
   .spinner {
-    display: none;
-    text-align: center;
-    margin: 20px 0;
+    grid-column: span 1;
   }
-
-  .spinner::after {
-    content: "";
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    border: 3px solid #999;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @media (max-width: 600px) {
-    .formular-container {
-      padding: 15px;
-    }
-  }
+}
