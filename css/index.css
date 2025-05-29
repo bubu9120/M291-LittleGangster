@@ -252,6 +252,18 @@ a:active {
   color: var(--white);
 }
 
+.footer__text-small {
+  width: 80%;
+  padding: 3rem 0;
+  margin: 0 auto;
+
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(1.4rem, 2vw, 1.4rem);
+  text-align: center;
+
+  color: var(--white);
+}
+
 .footer__text-big::first-letter {
   text-transform: uppercase;
 }
@@ -471,4 +483,3 @@ forms external */
   position: relative;
   left: 3px;
 }
-

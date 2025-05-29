@@ -1,268 +1,257 @@
-$(function () {
-  // Bestehendes Canvas holen
-  var canvas = document.getElementById("game-canvas");
-  var ctx = canvas.getContext("2d");
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
-  function rand(min, max, interval) {
-    if (interval === undefined) interval = 1;
-    return (
-      Math.round(
-        (Math.floor(Math.random() * (max - min + 1)) + min) / interval
-      ) * interval
+const startScreen = document.getElementById("startScreen");
+const gameUI = document.getElementById("gameUI");
+const endScreen = document.getElementById("endScreen");
+const scoreDisplay = document.getElementById("score");
+const finalScoreDisplay = document.getElementById("finalScore");
+
+const groundY = 230;
+const baseObjectWidth = 40;
+const baseObjectHeight = 60;
+const gravity = 1.1;
+
+let score = 0;
+let isRunning = false;
+let gameInterval, spawnInterval;
+let shieldsLeft = 3;
+
+const bgImage = new Image();
+bgImage.src = "./assets/images/background_ghetto.avif";
+
+const characterImg = new Image();
+characterImg.src = "./assets/images/character.png";
+
+const obstacleImg = new Image();
+obstacleImg.src = "./assets/images/police.png";
+
+const shieldImg = new Image();
+shieldImg.src = "./assets/images/Shield.png";
+
+const character = {
+  x: 50,
+  y: groundY,
+  width: baseObjectWidth,
+  height: baseObjectHeight,
+  vy: 0,
+  jumping: false,
+  jumpsDone: 0,
+  sliding: false,
+  hasShield: false,
+};
+
+let obstacles = [];
+
+let obstacleSpeed = 5;
+let spawnDelay = 1500;
+
+function drawBackground() {
+  ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+}
+
+function drawCharacter() {
+  ctx.drawImage(
+    characterImg,
+    character.x,
+    character.y,
+    character.width,
+    character.height
+  );
+
+  if (character.hasShield) {
+    ctx.drawImage(
+      shieldImg,
+      character.x + character.width - 15,
+      character.y - 15,
+      20,
+      20
     );
   }
+}
 
-  function randIndex(thearray) {
-    return thearray[rand(1, thearray.length) - 1];
-  }
+function spawnObstacle() {
+  const sizeFactor = 0.7 + Math.random() * 0.6;
+  obstacles.push({
+    x: canvas.width,
+    y: groundY + baseObjectHeight * (1 - sizeFactor),
+    width: baseObjectWidth * sizeFactor,
+    height: baseObjectHeight * sizeFactor,
+    speed: obstacleSpeed + Math.random() * 1.5,
+  });
+}
 
-  var player = (function () {
-    var x = 100,
-      y = canvas.height / 2,
-      w = 10,
-      h = 10,
-      speed = 10,
-      dead = false,
-      death = 0;
+function drawObstacles() {
+  obstacles.forEach((ob) => {
+    ctx.drawImage(obstacleImg, ob.x, ob.y, ob.width, ob.height);
+  });
+}
 
-    return {
-      getX: () => x,
-      getY: () => y,
-      getW: () => w,
-      getH: () => h,
-      die: () => {
-        dead = true;
-        ++death;
-      },
-      getDeath: () => death,
-      resurrect: function () {
-        this.moveTo(100, canvas.height / 2);
-        dead = false;
-        this.draw();
-      },
-      respawn: function () {
-        this.moveTo(100, canvas.height / 2);
-        this.draw();
-        blocks.nextLevel();
-      },
-      isDead: () => dead,
-      draw: function () {
-        ctx.fillStyle = "#50BEFA";
-        ctx.fillRect(x, y, w, h);
-      },
-      moveTo: function (a, b) {
-        if (dead) return;
-        x = a;
-        y = b;
-        if (y + h > canvas.height) {
-          y = canvas.height - h;
-        }
-      },
+function updateObstacles() {
+  obstacles.forEach((ob) => {
+    ob.x -= ob.speed;
+  });
+  obstacles = obstacles.filter((ob) => ob.x + ob.width > 0);
+}
+
+function checkCollision() {
+  const buffer = 10;
+
+  for (let i = 0; i < obstacles.length; i++) {
+    const ob = obstacles[i];
+    const characterBox = {
+      x: character.x + buffer,
+      y: character.y + buffer,
+      width: character.width - buffer * 2,
+      height: character.height - buffer * 2,
     };
-  })();
 
-  var blocks = (function () {
-    var blocks = [],
-      level = 0,
-      level_factor = 1.2,
-      start = {
-        n: 10,
-        x1: 210,
-        x2: 700,
-        h_min: 15,
-        h_max: 100,
-        speed_min: 0.5,
-        speed_max: 5,
-        direction: ["up", "down"],
-      };
+    const obstacleBox = {
+      x: ob.x + buffer,
+      y: ob.y + buffer,
+      width: ob.width - buffer * 2,
+      height: ob.height - buffer * 2,
+    };
 
-    function Block(direction) {
-      this.w = 10;
-      this.h = rand(start.h_min, start.h_max);
-      this.x = rand(start.x1, start.x2, 10);
-      this.y = 0;
-      this.speed = rand(start.speed_min, start.speed_max);
-      this.direction = direction;
-      if (direction === "up") {
-        this.y = canvas.height + rand(5, 350);
+    if (
+      characterBox.x < obstacleBox.x + obstacleBox.width &&
+      characterBox.x + characterBox.width > obstacleBox.x &&
+      characterBox.y < obstacleBox.y + obstacleBox.height &&
+      characterBox.y + characterBox.height > obstacleBox.y
+    ) {
+      if (character.hasShield) {
+        character.hasShield = false;
+        obstacles.splice(i, 1);
+        break;
       } else {
-        this.y -= rand(5, 350);
+        endGame();
+        break;
       }
     }
-
-    return {
-      curLevel: () => level,
-      nextLevel: function () {
-        ++level;
-        blocks = [];
-        var n = Math.ceil(start.n + level * level_factor);
-        this.createXBlocks(n);
-      },
-      draw: function (b) {
-        ctx.fillStyle = player.isDead() ? "#800000" : "#D98D00";
-        ctx.fillRect(b.x, b.y, b.w, b.h);
-      },
-      drawZone: function () {
-        ctx.fillStyle = "#111111";
-        ctx.fillRect(start.x1, 0, start.x2 - start.x1 + 10, canvas.height);
-      },
-      createXBlocks: function (n) {
-        for (var i = 0; i < n; ++i) {
-          blocks.push(new Block(randIndex(start.direction)));
-        }
-      },
-      moveAll: function () {
-        if (player.isDead()) return;
-
-        var px = player.getX(),
-          py = player.getY(),
-          pw = player.getW(),
-          ph = player.getH();
-
-        if (px > start.x2) {
-          ctrl.x = 0;
-          ctrl.y = canvas.height / 2;
-          ctrl.velX = 0;
-          ctrl.velY = 0;
-          player.respawn();
-          return;
-        }
-
-        for (var i = 0; i < blocks.length; ++i) {
-          var b = blocks[i];
-          if (b.direction === "up") {
-            b.y -= b.speed;
-            if (b.y + b.h < 0) b.y = canvas.height + rand(10, 350);
-          } else {
-            b.y += b.speed;
-            if (b.y > canvas.height) b.y = 0 - rand(10, 350);
-          }
-
-          // Collision
-          if (
-            (px > b.x && px < b.x + b.w && py > b.y && py < b.y + b.h) ||
-            (px + pw < b.x + b.w &&
-              px + pw > b.x &&
-              py + ph < b.y + b.h &&
-              py + ph > b.y)
-          ) {
-            player.die();
-          }
-        }
-      },
-      drawAll: function () {
-        for (var i in blocks) {
-          this.draw(blocks[i]);
-        }
-      },
-    };
-  })();
-
-  var ctrl = {
-    x: 100,
-    y: canvas.height / 2,
-    velY: 0,
-    velX: 0,
-    speed: 1400,
-    friction: 0.68,
-    keys: [],
-  };
-
-  function updateCtrl() {
-    if (ctrl.keys[32]) {
-      if (player.isDead()) {
-        ctrl.x = 0;
-        ctrl.y = canvas.height / 2;
-        ctrl.velX = 0;
-        ctrl.velY = 0;
-        player.resurrect();
-      }
-    }
-
-    if (ctrl.keys[38] || ctrl.keys[87]) ctrl.velY--;
-    if (ctrl.keys[40] || ctrl.keys[83]) ctrl.velY++;
-    if (ctrl.keys[39] || ctrl.keys[68]) ctrl.velX++;
-    if (ctrl.keys[37] || ctrl.keys[65]) ctrl.velX--;
-
-    ctrl.velY *= ctrl.friction;
-    ctrl.y += ctrl.velY;
-
-    ctrl.velX *= ctrl.friction;
-    ctrl.x += ctrl.velX;
-
-    if (ctrl.x >= canvas.width) ctrl.x = canvas.width;
-    else if (ctrl.x <= 5) ctrl.x = 5;
-
-    if (ctrl.y > canvas.height) ctrl.y = canvas.height;
-    else if (ctrl.y <= 5) ctrl.y = 5;
-
-    player.moveTo(ctrl.x, ctrl.y);
-
-    setTimeout(updateCtrl, 10);
   }
+}
 
-  updateCtrl();
+function updateCharacter() {
+  if (character.jumping) {
+    character.vy += gravity;
+    character.y += character.vy;
 
-  document.body.addEventListener("keydown", function (e) {
-    ctrl.keys[e.keyCode] = true;
-  });
-  document.body.addEventListener("keyup", function (e) {
-    ctrl.keys[e.keyCode] = false;
-  });
-
-  blocks.nextLevel();
-
-  function update() {
-    blocks.moveAll();
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    blocks.drawZone();
-    blocks.drawAll();
-    player.draw();
-
-    ctx.font = "14px Verdana";
-
-    if (player.isDead()) {
-      ctx.fillStyle = "#9F000C";
-      ctx.fillText("Game over!", 10, 50);
-      ctx.fillText("Press [SPACE]", 10, 70);
-    } else {
-      ctx.fillStyle = "#D98D00";
-      ctx.fillText("Cross to the other side", 10, 20);
-      ctx.fillText("---------------------->", 10, 40);
-      ctx.fillText("Use keyboard arrows", 10, 60);
-      ctx.fillText("or [A] [W] [S] [D]", 10, 80);
-      ctx.fillText("Level : " + blocks.curLevel(), 10, 150);
-      ctx.fillText("Death : " + player.getDeath(), 10, 170);
+    if (character.y >= groundY) {
+      character.y = groundY;
+      character.vy = 0;
+      character.jumping = false;
+      character.jumpsDone = 0;
     }
   }
 
-  var fps = 0,
-    now,
-    lastUpdate = new Date() * 1;
-  var fpsFilter = 50;
+  if (character.sliding && !character.jumping) {
+    character.height = baseObjectHeight / 2;
+    character.y = groundY + baseObjectHeight / 2;
+  } else if (!character.jumping) {
+    character.height = baseObjectHeight;
+    character.y = groundY;
+  }
+}
 
-  function drawFrame() {
-    var thisFrameFPS = 1000 / ((now = new Date()) - lastUpdate);
-    if (now != lastUpdate) {
-      fps += (thisFrameFPS - fps) / fpsFilter;
-      lastUpdate = now;
-      if (isNaN(fps)) fps = 1;
+function increaseDifficulty() {
+  if (score % 100 === 0) {
+    obstacleSpeed = Math.min(15, obstacleSpeed + 0.3);
+    spawnDelay = Math.max(600, spawnDelay - 50);
+    clearInterval(spawnInterval);
+    spawnInterval = setInterval(spawnObstacle, spawnDelay);
+  }
+}
 
-      ctx.fillStyle = "#888";
-      ctx.font = "10px Verdana";
-      ctx.fillText(fps.toFixed(0) + " fps", 5, canvas.height - 5);
+function update() {
+  drawBackground();
+  updateCharacter();
+  drawCharacter();
+  updateObstacles();
+  drawObstacles();
+  checkCollision();
+
+  score++;
+  scoreDisplay.textContent = score;
+
+  increaseDifficulty();
+}
+
+function startGame() {
+  document.body.classList.add("no-scroll");
+  document.body.classList.add("game-active");
+  character.y = groundY;
+  character.vy = 0;
+  character.jumping = false;
+  character.jumpsDone = 0;
+  character.sliding = false;
+  character.height = baseObjectHeight;
+  character.hasShield = false;
+  shieldsLeft = 3;
+  document.getElementById("shieldCount").textContent = shieldsLeft;
+
+  obstacles = [];
+  score = 0;
+  obstacleSpeed = 5;
+  spawnDelay = 1500;
+
+  startScreen.style.display = "none";
+  endScreen.style.display = "none";
+  gameUI.style.display = "block";
+
+  isRunning = true;
+  gameInterval = setInterval(update, 30);
+  spawnInterval = setInterval(spawnObstacle, spawnDelay);
+}
+
+function endGame() {
+  isRunning = false;
+  clearInterval(gameInterval);
+  clearInterval(spawnInterval);
+  gameUI.style.display = "none";
+  endScreen.style.display = "block";
+  finalScoreDisplay.textContent = score;
+
+  if (finalScoreDisplay.textContent > 4000) {
+    const code = "GANSTER1000";
+    const codeElement = document.getElementById("rewardCode");
+    codeElement.textContent = `Dein Rabattcode: ${code}`;
+    codeElement.style.display = "block";
+  }
+
+  document.body.classList.remove("no-scroll");
+  document.body.classList.remove("game-active");
+}
+
+function restartGame() {
+  startGame();
+}
+
+document.addEventListener("keydown", (e) => {
+  if (!isRunning) return;
+
+  if (e.key === "ArrowUp") {
+    if (character.jumpsDone < 2) {
+      character.jumping = true;
+      character.vy = -18;
+      character.sliding = false;
+      character.jumpsDone++;
     }
   }
 
-  var animation_fps = 60;
+  if (e.key === "ArrowDown" && !character.jumping && !character.sliding) {
+    character.sliding = true;
+    setTimeout(() => {
+      character.sliding = false;
+    }, 700);
+  }
+});
 
-  setInterval(function () {
-    update();
-    draw();
-    drawFrame();
-  }, 1000 / animation_fps);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "s") {
+    if (shieldsLeft > 0 && !character.hasShield) {
+      character.hasShield = true;
+      shieldsLeft--;
+      document.getElementById("shieldCount").textContent = shieldsLeft;
+    }
+  }
 });
