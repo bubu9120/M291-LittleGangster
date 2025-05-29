@@ -211,7 +211,7 @@ function endGame() {
   endScreen.style.display = "block";
   finalScoreDisplay.textContent = score;
 
-  if (finalScoreDisplay.textContent > 4000) {
+  if (finalScoreDisplay.textContent > 3000) {
     const code = "GANSTER1000";
     const codeElement = document.getElementById("rewardCode");
     codeElement.textContent = `Dein Rabattcode: ${code}`;
