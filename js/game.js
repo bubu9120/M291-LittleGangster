@@ -15,6 +15,7 @@ const gravity = 1.1;
 let score = 0;
 let isRunning = false;
 let gameInterval, spawnInterval;
+let shieldsLeft = 3;
 
 const bgImage = new Image();
 bgImage.src = "./assets/images/background_ghetto.avif";
@@ -25,8 +26,8 @@ characterImg.src = "./assets/images/character.png";
 const obstacleImg = new Image();
 obstacleImg.src = "./assets/images/police.png";
 
-const shieldImg = new Image(); // Optional: Ein kleines Schild-Icon als visueller Effekt für Schutzschild
-shieldImg.src = "./assets/images/Shield.png"; // Du kannst ein passendes Icon bereitstellen
+const shieldImg = new Image();
+shieldImg.src = "./assets/images/Shield.png";
 
 const character = {
   x: 50,
@@ -35,9 +36,9 @@ const character = {
   height: baseObjectHeight,
   vy: 0,
   jumping: false,
-  jumpsDone: 0, // Für Doppelsprung
+  jumpsDone: 0,
   sliding: false,
-  hasShield: false, // Schutzschild aktiv?
+  hasShield: false,
 };
 
 let obstacles = [];
@@ -57,7 +58,7 @@ function drawCharacter() {
     character.width,
     character.height
   );
-  // Schild-Icon anzeigen, wenn aktiv
+
   if (character.hasShield) {
     ctx.drawImage(
       shieldImg,
@@ -69,9 +70,8 @@ function drawCharacter() {
   }
 }
 
-// Variable Hindernisse mit Größe und Geschwindigkeit
 function spawnObstacle() {
-  const sizeFactor = 0.7 + Math.random() * 0.6; // zwischen 0.7 und 1.3
+  const sizeFactor = 0.7 + Math.random() * 0.6;
   obstacles.push({
     x: canvas.width,
     y: groundY + baseObjectHeight * (1 - sizeFactor),
@@ -120,7 +120,6 @@ function checkCollision() {
       characterBox.y + characterBox.height > obstacleBox.y
     ) {
       if (character.hasShield) {
-        // Schild schluckt Kollision, Schild weg und Hindernis entfernen
         character.hasShield = false;
         obstacles.splice(i, 1);
         break;
@@ -141,7 +140,7 @@ function updateCharacter() {
       character.y = groundY;
       character.vy = 0;
       character.jumping = false;
-      character.jumpsDone = 0; // Reset Doppelsprung wenn auf dem Boden
+      character.jumpsDone = 0;
     }
   }
 
@@ -154,16 +153,10 @@ function updateCharacter() {
   }
 }
 
-// Schwierigkeit mit der Zeit erhöhen
 function increaseDifficulty() {
-  // alle 100 Punkte schwieriger
   if (score % 100 === 0) {
-    // max Geschwindigkeit 15
     obstacleSpeed = Math.min(15, obstacleSpeed + 0.3);
-
-    // Spawnrate verringern bis 600ms
     spawnDelay = Math.max(600, spawnDelay - 50);
-
     clearInterval(spawnInterval);
     spawnInterval = setInterval(spawnObstacle, spawnDelay);
   }
@@ -185,13 +178,17 @@ function update() {
 
 function startGame() {
   document.body.classList.add("no-scroll");
+  document.body.classList.add("game-active");
   character.y = groundY;
   character.vy = 0;
   character.jumping = false;
   character.jumpsDone = 0;
   character.sliding = false;
   character.height = baseObjectHeight;
-  character.hasShield = false; // Schild am Spielstart aus
+  character.hasShield = false;
+  shieldsLeft = 3;
+  document.getElementById("shieldCount").textContent = shieldsLeft;
+
   obstacles = [];
   score = 0;
   obstacleSpeed = 5;
@@ -213,14 +210,22 @@ function endGame() {
   gameUI.style.display = "none";
   endScreen.style.display = "block";
   finalScoreDisplay.textContent = score;
+
+  if (finalScoreDisplay.textContent > 4000) {
+    const code = "GANSTER1000";
+    const codeElement = document.getElementById("rewardCode");
+    codeElement.textContent = `Dein Rabattcode: ${code}`;
+    codeElement.style.display = "block";
+  }
+
   document.body.classList.remove("no-scroll");
+  document.body.classList.remove("game-active");
 }
 
 function restartGame() {
   startGame();
 }
 
-// Doppelsprung und Slide
 document.addEventListener("keydown", (e) => {
   if (!isRunning) return;
 
@@ -241,12 +246,12 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// (Optional) Power-Up manuell per Taste (für Testzwecke)
-// Du kannst das entfernen oder an Events koppeln
-
 document.addEventListener("keydown", (e) => {
-  if (!isRunning) return;
   if (e.key === "s") {
-    character.hasShield = true;
+    if (shieldsLeft > 0 && !character.hasShield) {
+      character.hasShield = true;
+      shieldsLeft--;
+      document.getElementById("shieldCount").textContent = shieldsLeft;
+    }
   }
 });

@@ -1,55 +1,137 @@
-/* canvas und container richtig zentrieren */
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #111;
+  color: #f1f1f1;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.primary-section {
+  height: auto;
+  min-height: 100vh;
+}
+
 #gameContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 400px;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 2rem 0;
+  padding: 2rem;
   position: relative;
   overflow: hidden;
 }
 
-/* Spiel-Bildschirme konsistent stylen */
-.game-screen {
-  text-align: center;
-  margin-top: 1rem;
+body.no-scroll,
+body.game-active {
+  overflow: hidden;
 }
 
-/* Canvas zentrieren */
+.game-active #gameContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 850px;
+  width: 100%;
+  background: #1a1a1a;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  z-index: 1000;
+  padding: 30px;
+}
+
+/* Canvas */
 #gameCanvas {
   display: block;
-  margin: 0 auto;
+  margin: 20px auto;
   border: 2px solid #333;
   background-color: #eee;
-  max-width: 100%;
+  width: 100%;
+  max-width: 800px;
+  border-radius: 6px;
 }
 
-/* Buttons stilisieren */
-.game-button {
-  padding: 10px 20px;
+/* HUD */
+.hud {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Game Screens */
+.game-screen {
+  text-align: center;
+  padding: 20px;
+  background: #1e1e1e;
+  border: 1px solid #444;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.game-screen h1,
+.game-screen h2 {
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.subtitle {
   font-size: 1.1rem;
-  margin-top: 10px;
-  cursor: pointer;
-  background-color: #222;
+  margin-bottom: 1rem;
+  color: #ccc;
+}
+
+/* Instructions Box */
+.instructions-box {
+  text-align: left;
+  background: #2a2a2a;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px 0;
+  color: #ddd;
+}
+
+.instructions-box ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.instructions-box li {
+  margin: 6px 0;
+}
+
+/* Buttons */
+.game-button {
+  padding: 12px 28px;
+  font-size: 1rem;
+  background-color: #2c2c2c;
   color: #fff;
   border: none;
   border-radius: 6px;
-  transition: background-color 0.2s ease;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .game-button:hover {
   background-color: #444;
 }
 
-/* Punktestand */
-#score {
-  font-weight: bold;
+/* Reward Code */
+.reward-code {
   font-size: 1.2rem;
-}
-
-/* Body-Scroll während des Spiels verhindern */
-body.no-scroll {
-  overflow: hidden;
+  color: #00ff88;
+  background: #202020;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-top: 10px;
+  border: 1px dashed #00ff88;
 }
