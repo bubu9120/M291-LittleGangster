@@ -4,7 +4,7 @@ body {
   overflow-x: hidden;
 }
 
-.primary-section {
+.gamesite {
   height: auto;
   min-height: 100vh;
 }
@@ -40,7 +40,6 @@ body.game-active {
   padding: 30px;
 }
 
-/* Canvas */
 #gameCanvas {
   display: block;
   margin: 20px auto;
@@ -51,7 +50,6 @@ body.game-active {
   border-radius: 6px;
 }
 
-/* HUD */
 .hud {
   display: flex;
   justify-content: space-between;
@@ -62,7 +60,6 @@ body.game-active {
   margin-bottom: 0.5rem;
 }
 
-/* Game Screens */
 .game-screen {
   text-align: center;
   padding: 20px;
@@ -86,7 +83,6 @@ body.game-active {
   color: #ccc;
 }
 
-/* Instructions Box */
 .instructions-box {
   text-align: left;
   background: #2a2a2a;
@@ -105,7 +101,6 @@ body.game-active {
   margin: 6px 0;
 }
 
-/* Buttons */
 .game-button {
   padding: 12px 28px;
   font-size: 1rem;
@@ -122,7 +117,6 @@ body.game-active {
   background-color: #444;
 }
 
-/* Reward Code */
 .reward-code {
   font-size: 1.2rem;
   color: #00ff88;
