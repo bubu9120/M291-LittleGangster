@@ -10,33 +10,36 @@
   <body>
     <header class="header">
       <div class="container">
-        <button class="toggle" aria-label="Navigation umschalten">
+        <button class="toggle">
           <i class="hamburguer fas fa-bars"></i>
         </button>
+
         <img
           src="./assets/images/LittleGanster_logo.png"
-          alt="Little Ganster Logo"
+          alt="Conquering responsive layouts logo"
           class="logo"
-          height="30"
+          height="30px"
         />
-        <nav
-          class="nav-container primary-nav"
-          role="navigation"
-          aria-label="Hauptnavigation"
-        >
-          <ul class="nav__list">
-            <li class="nav__list__item">
-              <a href="./index.html" class="primary-nav__link">Startseite</a>
-            </li>
-            <li class="nav__list__item">
-              <a href="./about.html" class="primary-nav__link">Über uns</a>
-            </li>
-            <li class="nav__list__item">
-              <a href="./game.html" class="primary-nav__link">Gewinnspiel</a>
-            </li>
-          </ul>
-        </nav>
+
+        <div class="nav-container">
+          <nav class="primary-nav">
+            <ul class="nav__list">
+              <li class="nav__list__item">
+                <a href="./index.html" class="primary-nav__link">Startseite</a>
+              </li>
+
+              <li class="nav__list__item">
+                <a href="./about.html" class="primary-nav__link">Über uns</a>
+              </li>
+
+              <li class="nav__list__item">
+                <a href="./game.html" class="primary-nav__link">Gewinnspiel</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
+      <!--End of the first container inside header-->
     </header>
     <main class="main-content">
       <section class="hero-section">
