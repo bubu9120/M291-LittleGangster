@@ -53,6 +53,23 @@ body {
   margin: 0 auto;
 }
 /*Header*/
+
+.logo {
+  animation: stretch-logo 1s ease-in-out;
+}
+
+@keyframes stretch-logo {
+  0% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(1.4);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
 .header {
   position: sticky;
   top: 0;
@@ -145,6 +162,23 @@ a:active {
   text-align: center;
 }
 /*Main*/
+
+.contact-us-button {
+  margin-top: 40px;
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.contact-us-button:hover {
+  background-color: #333;
+}
 
 .hero-section {
   background: var(--overlay-black);
